@@ -44,36 +44,36 @@ type ClusterService struct {
 }
 
 type Cluster struct {
-	ID           uint      `json:"id"`
-	ProjectID    int       `json:"projectID"`
-	RegionID     int       `json:"regionID"`
-	Processing   bool      `json:"processing"`
-	HA           bool      `json:"ha"`
-	InternalLB   bool      `json:"internalLB"`
-	Endpoint     string    `json:"endpoint"`
-	KubeAuthType string    `json:"kubeAuthType"`
-	Version      string    `json:"version"`
-	Name         string    `json:"name"`
-	NetworkID    string    `json:"networkID"`
-	SubnetID     string    `json:"subnetID"`
-	State        string    `json:"state"`
-	Status       string    `json:"status"`
-	Existed      string    `json:"existed"`
-	Created      time.Time `json:"created"`
-	MastersPool  Pool      `json:"mastersPool"`
-	WorkersPools []Pool    `json:"workersPools"`
+	ID           uint      `json:"id" yaml:"id"`
+	ProjectID    int       `json:"projectID" yaml:"projectID"`
+	RegionID     int       `json:"regionID" yaml:"regionID"`
+	Processing   bool      `json:"processing" yaml:"processing"`
+	HA           bool      `json:"ha" yaml:"ha"`
+	InternalLB   bool      `json:"internalLB" yaml:"internalLB"`
+	Endpoint     string    `json:"endpoint" yaml:"endpoint"`
+	KubeAuthType string    `json:"kubeAuthType" yaml:"kubeAuthType"`
+	Version      string    `json:"version" yaml:"version"`
+	Name         string    `json:"name" yaml:"name"`
+	NetworkID    string    `json:"networkID" yaml:"networkID"`
+	SubnetID     string    `json:"subnetID" yaml:"subnetID"`
+	State        string    `json:"state" yaml:"state"`
+	Status       string    `json:"status" yaml:"status"`
+	Existed      string    `json:"existed" yaml:"existed"`
+	Created      time.Time `json:"created" yaml:"created"`
+	MastersPool  Pool      `json:"mastersPool" yaml:"mastersPool"`
+	WorkersPools []Pool    `json:"workersPools" yaml:"workersPools"`
 }
 type ClusterOpt struct {
-	HA          bool      `json:"ha"`
-	InternalLB  bool      `json:"internalLB"`
-	AuthType    string    `json:"authType"`
-	Name        string    `json:"name"`
-	Version     string    `json:"version"`
-	APILbFlavor string    `json:"apiLbFlavor"`
-	NetworkID   string    `json:"networkID"`
-	SubnetID    string    `json:"subnetID"`
-	MasterOpt   PoolOpt   `json:"masterOpt"`
-	WorkerOpts  []PoolOpt `json:"workerOpts"`
+	HA          bool      `json:"ha" yaml:"ha"`
+	InternalLB  bool      `json:"internalLB" yaml:"internalLB"`
+	AuthType    string    `json:"authType" yaml:"authType"`
+	Name        string    `json:"name" yaml:"name"`
+	Version     string    `json:"version" yaml:"version"`
+	APILbFlavor string    `json:"apiLbFlavor" yaml:"APILbFlavor"`
+	NetworkID   string    `json:"networkID" yaml:"networkID"`
+	SubnetID    string    `json:"subnetID" yaml:"subnetID"`
+	MasterOpt   PoolOpt   `json:"masterOpt" yaml:"masterOpt"`
+	WorkerOpts  []PoolOpt `json:"workerOpts" yaml:"workerOpts"`
 }
 
 func (s *ClusterService) ServerVersion(ctx context.Context) (string, error) {
