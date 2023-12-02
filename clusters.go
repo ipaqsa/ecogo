@@ -27,7 +27,7 @@ var _ ClusterServiceI = &ClusterService{}
 type ClusterServiceI interface {
 	ServerVersion(ctx context.Context) (string, error)
 
-	List(ctx context.Context) ([]Cluster, error)
+	List(ctx context.Context) ([]ClusterShortInfo, error)
 
 	Create(ctx context.Context, opt *ClusterOpt) (uint, error)
 	Request(ctx context.Context, clusterID uint) (*Cluster, error)
@@ -43,6 +43,15 @@ type ClusterService struct {
 	client *Client
 }
 
+type ClusterShortInfo struct {
+	ID         uint      `json:"id" yaml:"id"`
+	Processing bool      `json:"processing" yaml:"processing"`
+	Name       string    `json:"name" yaml:"name"`
+	State      string    `json:"state" yaml:"state"`
+	Status     string    `json:"status" yaml:"status"`
+	Existed    string    `json:"existed" yaml:"existed"`
+	Created    time.Time `json:"created" yaml:"created"`
+}
 type Cluster struct {
 	ID           uint      `json:"id" yaml:"id"`
 	ProjectID    int       `json:"projectID" yaml:"projectID"`
@@ -88,13 +97,13 @@ func (s *ClusterService) ServerVersion(ctx context.Context) (string, error) {
 	return version, nil
 }
 
-func (s *ClusterService) List(ctx context.Context) ([]Cluster, error) {
+func (s *ClusterService) List(ctx context.Context) ([]ClusterShortInfo, error) {
 	requestPath := fmt.Sprintf(listClustersPath, s.client.projectID, s.client.regionID)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, requestPath, nil)
 	if err != nil {
 		return nil, err
 	}
-	var clusters []Cluster
+	var clusters []ClusterShortInfo
 	if _, err = s.client.Do(ctx, req, &clusters); err != nil {
 		return nil, err
 	}
