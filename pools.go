@@ -17,7 +17,7 @@ var _ PoolServiceI = &PoolService{}
 type PoolServiceI interface {
 	Create(ctx context.Context, clusterID uint, opt *PoolOpt) error
 	Update(ctx context.Context, clusterID, poolID uint, opt *PoolOpt) error
-	Delete(ctx context.Context, clusterID, poolID uint, opt *PoolOpt) error
+	Delete(ctx context.Context, clusterID, poolID uint) error
 }
 type PoolService struct {
 	client *Client
@@ -76,9 +76,9 @@ func (s *PoolService) Update(ctx context.Context, clusterID, poolID uint, opt *P
 	}
 	return nil
 }
-func (s *PoolService) Delete(ctx context.Context, clusterID, poolID uint, opt *PoolOpt) error {
+func (s *PoolService) Delete(ctx context.Context, clusterID, poolID uint) error {
 	requestPath := fmt.Sprintf(poolBasePathUD, s.client.projectID, s.client.regionID, clusterID, poolID)
-	req, err := s.client.NewRequest(ctx, http.MethodDelete, requestPath, opt)
+	req, err := s.client.NewRequest(ctx, http.MethodDelete, requestPath, nil)
 	if err != nil {
 		return err
 	}
