@@ -67,7 +67,6 @@ func newClient(httpClient *http.Client) *Client {
 	c.Clusters = &ClusterService{client: c}
 	c.Pools = &PoolService{client: c}
 	c.Users = &UserService{client: c}
-	c.Roles = &RoleService{client: c}
 
 	return c
 }

@@ -4,86 +4,67 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"path"
 )
 
 var (
-	listUsersPath = path.Join(apiV1Path, "users/%s")
-
-	usersBasePathRD = path.Join(apiV1Path, "/users")
-
-	listRolesPath = "/v1/users/roles"
-	//rolePath = path.Join(listRolesPath, "%s")
+	userPath  = path.Join(apiV1Path, "/kube/user")
+	adminPath = path.Join(apiV1Path, "/kube/admin")
 )
 
 var _ UserServiceI = &UserService{}
-var _ RoleServiceI = &RoleService{}
 
 type UserServiceI interface {
-	List(ctx context.Context, clusterID uint, namespace string) (Users, error)
-
-	RequestConfig(ctx context.Context, clusterID uint, opt *UserOpt) (*Config, error)
-	Delete(ctx context.Context, clusterID uint, opt *UserOpt) error
+	RequestAdminConfig(ctx context.Context, clusterID uint, ttl string) (*UserConfig, error)
+	RequestUserConfig(ctx context.Context, clusterID uint, opt *UserOpt) (*UserConfig, error)
+	DeleteUser(ctx context.Context, clusterID uint, opt *UserOpt) error
 }
 type UserService struct {
 	client *Client
 }
 
-type Users struct {
-	Users []*UserOpt `json:"users"`
-}
-type UserOpt struct {
-	Role       string `json:"role"`
-	Name       string `json:"name"`
-	User       string `json:"user"`
-	Namespace  string `json:"namespace"`
-	Created    string `json:"created"`
-	Expired    string `json:"expired"`
-	SecondsExp uint64 `json:"secondsExp"`
-}
-
-type Config struct {
+type UserConfig struct {
 	Content string `json:"content"`
 }
 
-type RoleServiceI interface {
-	List(ctx context.Context) ([]string, error)
-
-	//Request(ctx context.Context, role string)
-}
-type RoleService struct {
-	client *Client
+type UserOpt struct {
+	Role       string `json:"role"`
+	Name       string `json:"name"`
+	Namespace  string `json:"namespace"`
+	SecondsExp uint64 `json:"secondsExp"`
 }
 
-func (s *UserService) List(ctx context.Context, clusterID uint, namespace string) (Users, error) {
-	requestPath := fmt.Sprintf(listUsersPath, s.client.projectID, s.client.regionID, clusterID, namespace)
+func (s *UserService) RequestAdminConfig(ctx context.Context, clusterID uint, ttl string) (*UserConfig, error) {
+	requestPath := fmt.Sprintf(adminPath, s.client.projectID, s.client.regionID, clusterID)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, requestPath, nil)
-	if err != nil {
-		return Users{}, err
-	}
-
-	var users Users
-	if _, err = s.client.Do(ctx, req, &users); err != nil {
-		return Users{}, err
-	}
-	return users, err
-}
-
-func (s *UserService) RequestConfig(ctx context.Context, clusterID uint, opt *UserOpt) (*Config, error) {
-	requestPath := fmt.Sprintf(usersBasePathRD, s.client.projectID, s.client.regionID, clusterID)
-	req, err := s.client.NewRequest(ctx, http.MethodPost, requestPath, opt)
 	if err != nil {
 		return nil, err
 	}
-
-	var config Config
+	req.URL.RawQuery = url.Values{
+		"ttl": {ttl},
+	}.Encode()
+	var config UserConfig
 	if _, err = s.client.Do(ctx, req, &config); err != nil {
 		return nil, err
 	}
 	return &config, err
 }
-func (s *UserService) Delete(ctx context.Context, clusterID uint, opt *UserOpt) error {
-	requestPath := fmt.Sprintf(usersBasePathRD, s.client.projectID, s.client.regionID, clusterID)
+func (s *UserService) RequestUserConfig(ctx context.Context, clusterID uint, opt *UserOpt) (*UserConfig, error) {
+	requestPath := fmt.Sprintf(userPath, s.client.projectID, s.client.regionID, clusterID)
+	req, err := s.client.NewRequest(ctx, http.MethodPost, requestPath, opt)
+	if err != nil {
+		return nil, err
+	}
+
+	var config UserConfig
+	if _, err = s.client.Do(ctx, req, &config); err != nil {
+		return nil, err
+	}
+	return &config, err
+}
+func (s *UserService) DeleteUser(ctx context.Context, clusterID uint, opt *UserOpt) error {
+	requestPath := fmt.Sprintf(userPath, s.client.projectID, s.client.regionID, clusterID)
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, requestPath, opt)
 	if err != nil {
 		return err
@@ -94,17 +75,4 @@ func (s *UserService) Delete(ctx context.Context, clusterID uint, opt *UserOpt) 
 		return err
 	}
 	return nil
-}
-
-func (s *RoleService) List(ctx context.Context) ([]string, error) {
-	req, err := s.client.NewRequest(ctx, http.MethodGet, listRolesPath, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	var roles []string
-	if _, err = s.client.Do(ctx, req, &roles); err != nil {
-		return nil, err
-	}
-	return roles, err
 }

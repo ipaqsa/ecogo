@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	poolBasePath   = path.Join(apiV1Path, "pool")
-	poolBasePathUD = path.Join(poolBasePath, "%s")
+	poolPath   = path.Join(apiV1Path, "pool")
+	poolPathUD = path.Join(poolPath, "%s")
 )
 
 var _ PoolServiceI = &PoolService{}
@@ -51,7 +51,7 @@ type PoolOpt struct {
 }
 
 func (s *PoolService) Create(ctx context.Context, clusterID uint, opt *PoolOpt) error {
-	requestPath := fmt.Sprintf(poolBasePath, s.client.projectID, s.client.regionID, clusterID)
+	requestPath := fmt.Sprintf(poolPath, s.client.projectID, s.client.regionID, clusterID)
 	req, err := s.client.NewRequest(ctx, http.MethodPost, requestPath, opt)
 	if err != nil {
 		return err
@@ -64,7 +64,7 @@ func (s *PoolService) Create(ctx context.Context, clusterID uint, opt *PoolOpt) 
 	return nil
 }
 func (s *PoolService) Update(ctx context.Context, clusterID, poolID uint, opt *PoolOpt) error {
-	requestPath := fmt.Sprintf(poolBasePathUD, s.client.projectID, s.client.regionID, clusterID, poolID)
+	requestPath := fmt.Sprintf(poolPathUD, s.client.projectID, s.client.regionID, clusterID, poolID)
 	req, err := s.client.NewRequest(ctx, http.MethodPatch, requestPath, opt)
 	if err != nil {
 		return err
@@ -77,7 +77,7 @@ func (s *PoolService) Update(ctx context.Context, clusterID, poolID uint, opt *P
 	return nil
 }
 func (s *PoolService) Delete(ctx context.Context, clusterID, poolID uint) error {
-	requestPath := fmt.Sprintf(poolBasePathUD, s.client.projectID, s.client.regionID, clusterID, poolID)
+	requestPath := fmt.Sprintf(poolPathUD, s.client.projectID, s.client.regionID, clusterID, poolID)
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, requestPath, nil)
 	if err != nil {
 		return err

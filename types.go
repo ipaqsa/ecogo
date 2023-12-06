@@ -19,7 +19,6 @@ type Client struct {
 	Clusters ClusterServiceI
 	Pools    PoolServiceI
 	Users    UserServiceI
-	Roles    RoleServiceI
 
 	retryConfig RetryConfig
 }
