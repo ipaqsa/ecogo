@@ -9,7 +9,7 @@ import (
 
 var (
 	poolPath   = path.Join(apiV1Path, "pool")
-	poolPathUD = path.Join(poolPath, "%s")
+	poolPathUD = path.Join(poolPath, "%d")
 )
 
 var _ PoolServiceI = &PoolService{}
