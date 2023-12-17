@@ -53,14 +53,14 @@ type ClusterShortInfo struct {
 	Created    time.Time `json:"created" yaml:"created"`
 }
 type Cluster struct {
-	ID           uint      `json:"id" yaml:"id"`
-	ProjectID    int       `json:"projectID" yaml:"projectID"`
-	RegionID     int       `json:"regionID" yaml:"regionID"`
-	Processing   bool      `json:"processing" yaml:"processing"`
-	HA           bool      `json:"ha" yaml:"ha"`
-	InternalLB   bool      `json:"internalLB" yaml:"internalLB"`
-	Endpoint     string    `json:"endpoint" yaml:"endpoint"`
-	KubeAuthType string    `json:"kubeAuthType" yaml:"kubeAuthType"`
+	ID         uint   `json:"id" yaml:"id"`
+	ProjectID  int    `json:"projectID" yaml:"projectID"`
+	RegionID   int    `json:"regionID" yaml:"regionID"`
+	Processing bool   `json:"processing" yaml:"processing"`
+	HA         bool   `json:"ha" yaml:"ha"`
+	InternalLB bool   `json:"internalLB" yaml:"internalLB"`
+	Endpoint   string `json:"endpoint" yaml:"endpoint"`
+	//KubeAuthType string    `json:"kubeAuthType" yaml:"kubeAuthType"`
 	Version      string    `json:"version" yaml:"version"`
 	Name         string    `json:"name" yaml:"name"`
 	NetworkID    string    `json:"networkID" yaml:"networkID"`
@@ -73,9 +73,9 @@ type Cluster struct {
 	WorkersPools []Pool    `json:"workersPools" yaml:"workersPools"`
 }
 type ClusterOpt struct {
-	HA          bool      `json:"ha" yaml:"ha"`
-	InternalLB  bool      `json:"internalLB" yaml:"internalLB"`
-	AuthType    string    `json:"authType" yaml:"authType"`
+	HA         bool `json:"ha" yaml:"ha"`
+	InternalLB bool `json:"internalLB" yaml:"internalLB"`
+	//AuthType    string    `json:"authType" yaml:"authType"`
 	Name        string    `json:"name" yaml:"name"`
 	Version     string    `json:"version" yaml:"version"`
 	APILbFlavor string    `json:"apiLbFlavor" yaml:"APILbFlavor"`

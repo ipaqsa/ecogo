@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"path"
+	"time"
 )
 
 var (
@@ -38,16 +39,17 @@ type Pool struct {
 	VolumeType   string `json:"volumeType" yaml:"volumeType"`
 }
 type PoolOpt struct {
-	NodeCount    int    `json:"nodeCount" yaml:"nodeCount"`
-	MaxNodeCount int    `json:"maxNodeCount" yaml:"maxNodeCount"`
-	MinNodeCount int    `json:"minNodeCount" yaml:"minNodeCount"`
-	VolumeSize   int    `json:"volumeSize" yaml:"volumeSize"`
-	Repair       bool   `json:"repair" yaml:"repair"`
-	SetTaint     bool   `json:"set-taint" yaml:"setTaint"`
-	Role         string `json:"k8s-role" yaml:"role"`
-	VolumeType   string `json:"volumeType" yaml:"volumeType"`
-	Name         string `json:"name" yaml:"name"`
-	Flavor       string `json:"flavor" yaml:"flavor"`
+	NodeCount    int       `json:"nodeCount" yaml:"nodeCount"`
+	MaxNodeCount int       `json:"maxNodeCount" yaml:"maxNodeCount"`
+	MinNodeCount int       `json:"minNodeCount" yaml:"minNodeCount"`
+	VolumeSize   int       `json:"volumeSize" yaml:"volumeSize"`
+	Repair       bool      `json:"repair" yaml:"repair"`
+	SetTaint     bool      `json:"set-taint" yaml:"setTaint"`
+	Created      time.Time `json:"created" yaml:"created"`
+	Role         string    `json:"k8s-role" yaml:"role"`
+	VolumeType   string    `json:"volumeType" yaml:"volumeType"`
+	Name         string    `json:"name" yaml:"name"`
+	Flavor       string    `json:"flavor" yaml:"flavor"`
 }
 
 func (s *PoolService) Create(ctx context.Context, clusterID uint, opt *PoolOpt) error {
