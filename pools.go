@@ -25,31 +25,31 @@ type PoolService struct {
 }
 
 type Pool struct {
-	ID           uint   `json:"id" yaml:"id"`
-	NodeCount    int    `json:"nodeCount" yaml:"nodeCount"`
-	MaxNodeCount int    `json:"maxNodeCount" yaml:"maxNodeCount"`
-	MinNodeCount int    `json:"minNodeCount" yaml:"minNodeCount"`
-	VolumeSize   int    `json:"volumeSize" yaml:"volumeSize"`
-	SetTaint     bool   `json:"set-k8s-taint" yaml:"setTaint"`
-	Role         string `json:"k8s-role" yaml:"role"`
-	Name         string `json:"name" yaml:"name"`
-	Flavor       string `json:"flavor" yaml:"flavor"`
-	State        string `json:"state" yaml:"state"`
-	Status       string `json:"status" yaml:"status"`
-	VolumeType   string `json:"volumeType" yaml:"volumeType"`
-}
-type PoolOpt struct {
+	ID           uint      `json:"id" yaml:"id"`
 	NodeCount    int       `json:"nodeCount" yaml:"nodeCount"`
 	MaxNodeCount int       `json:"maxNodeCount" yaml:"maxNodeCount"`
 	MinNodeCount int       `json:"minNodeCount" yaml:"minNodeCount"`
 	VolumeSize   int       `json:"volumeSize" yaml:"volumeSize"`
-	Repair       bool      `json:"repair" yaml:"repair"`
 	SetTaint     bool      `json:"set-taint" yaml:"setTaint"`
 	Created      time.Time `json:"created" yaml:"created"`
 	Role         string    `json:"k8s-role" yaml:"role"`
-	VolumeType   string    `json:"volumeType" yaml:"volumeType"`
 	Name         string    `json:"name" yaml:"name"`
 	Flavor       string    `json:"flavor" yaml:"flavor"`
+	State        string    `json:"state" yaml:"state"`
+	Status       string    `json:"status" yaml:"status"`
+	VolumeType   string    `json:"volumeType" yaml:"volumeType"`
+}
+type PoolOpt struct {
+	NodeCount    int    `json:"nodeCount" yaml:"nodeCount"`
+	MaxNodeCount int    `json:"maxNodeCount" yaml:"maxNodeCount"`
+	MinNodeCount int    `json:"minNodeCount" yaml:"minNodeCount"`
+	VolumeSize   int    `json:"volumeSize" yaml:"volumeSize"`
+	Repair       bool   `json:"repair" yaml:"repair"`
+	SetTaint     bool   `json:"set-taint" yaml:"setTaint"`
+	Role         string `json:"k8s-role" yaml:"role"`
+	VolumeType   string `json:"volumeType" yaml:"volumeType"`
+	Name         string `json:"name" yaml:"name"`
+	Flavor       string `json:"flavor" yaml:"flavor"`
 }
 
 func (s *PoolService) Create(ctx context.Context, clusterID uint, opt *PoolOpt) error {

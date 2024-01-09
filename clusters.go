@@ -19,7 +19,6 @@ var (
 	repairClusterPath  = path.Join(apiV1Path, "repair")
 	makeClusterHAPath  = path.Join(apiV1Path, "ha")
 	healthyClusterPath = path.Join(apiV1Path, "health")
-	//certClusterPath    = path.Join("cert")
 )
 
 var _ ClusterServiceI = &ClusterService{}
@@ -53,14 +52,13 @@ type ClusterShortInfo struct {
 	Created    time.Time `json:"created" yaml:"created"`
 }
 type Cluster struct {
-	ID         uint   `json:"id" yaml:"id"`
-	ProjectID  int    `json:"projectID" yaml:"projectID"`
-	RegionID   int    `json:"regionID" yaml:"regionID"`
-	Processing bool   `json:"processing" yaml:"processing"`
-	HA         bool   `json:"ha" yaml:"ha"`
-	InternalLB bool   `json:"internalLB" yaml:"internalLB"`
-	Endpoint   string `json:"endpoint" yaml:"endpoint"`
-	//KubeAuthType string    `json:"kubeAuthType" yaml:"kubeAuthType"`
+	ID           uint      `json:"id" yaml:"id"`
+	ProjectID    int       `json:"projectID" yaml:"projectID"`
+	RegionID     int       `json:"regionID" yaml:"regionID"`
+	Processing   bool      `json:"processing" yaml:"processing"`
+	HA           bool      `json:"ha" yaml:"ha"`
+	InternalLB   bool      `json:"internalLB" yaml:"internalLB"`
+	Endpoint     string    `json:"endpoint" yaml:"endpoint"`
 	Version      string    `json:"version" yaml:"version"`
 	Name         string    `json:"name" yaml:"name"`
 	NetworkID    string    `json:"networkID" yaml:"networkID"`
