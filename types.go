@@ -1,4 +1,4 @@
-package goeco
+package ecogo
 
 import (
 	"fmt"

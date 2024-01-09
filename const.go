@@ -1,4 +1,4 @@
-package goeco
+package ecogo
 
 const (
 	userAgent = "eco-client"

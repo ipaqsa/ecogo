@@ -1,4 +1,4 @@
-module github.com/ipaqsa/goeco
+module github.com/ipaqsa/ecogo
 
 go 1.21
 
